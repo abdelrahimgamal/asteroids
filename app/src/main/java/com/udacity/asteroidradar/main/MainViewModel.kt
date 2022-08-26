@@ -23,18 +23,21 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      * init{} is called immediately when this ViewModel is created.
      */
     init {
-        refreshData()
+        refreshData(FilterOptions.ALL)
     }
 
-    fun refreshData() {
+    fun refreshData(filterOptions: FilterOptions) {
 
-        getDates()
+        setDates(filterOptions)
         viewModelScope.launch {
 
             try {
-                asteroidsRepository.refreshAsteroids(
-                    today, lastDay, apiKey
-                )
+                if (filterOptions == FilterOptions.ALL)
+                    asteroidsRepository.refreshAsteroids(apiKey)
+                else
+                    asteroidsRepository.refreshAsteroids(
+                        today, lastDay, apiKey
+                    )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -52,14 +55,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val pod = asteroidsRepository.pod
 
 
-    private fun getDates() {
+    fun setDates(filterOptions: FilterOptions) {
 
         val calendar = Calendar.getInstance()
         val currentTime = calendar.time
         val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-        today = dateFormat.format(currentTime)
-        calendar.add(Calendar.DAY_OF_YEAR, 7)
-        val lastTime = calendar.time
-        lastDay = dateFormat.format(lastTime)
+
+        if (filterOptions == FilterOptions.WEEKLY) {
+            today = dateFormat.format(currentTime)
+            calendar.add(Calendar.DAY_OF_YEAR, 7)
+            val lastTime = calendar.time
+            lastDay = dateFormat.format(lastTime)
+        } else if (filterOptions == FilterOptions.DAILY) {
+            today = dateFormat.format(currentTime)
+            lastDay = today
+        }
+
     }
+}
+
+enum class FilterOptions {
+    DAILY, WEEKLY, ALL
 }

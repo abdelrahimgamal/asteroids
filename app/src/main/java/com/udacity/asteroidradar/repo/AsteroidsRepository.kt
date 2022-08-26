@@ -43,6 +43,20 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
             database.asteroidDao.insertAll(asteroids)
         }
     }
+    suspend fun refreshAsteroids( apiKey: String) {
+        withContext(Dispatchers.IO) {
+            val asteroids =
+                parseAsteroidsJsonResult(
+                    JSONObject(
+                        Network.asteroids.getAsteroids(
+                            apiKey
+                        )
+                    )
+                )
+            database.asteroidDao.clear()
+            database.asteroidDao.insertAll(asteroids)
+        }
+    }
 
     /**
      * GET NASA Picture of the day.

@@ -52,6 +52,11 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.weekly -> viewModel.refreshData(FilterOptions.WEEKLY)
+            R.id.today -> viewModel.refreshData(FilterOptions.DAILY)
+            R.id.all -> viewModel.refreshData(FilterOptions.ALL)
+        }
         return true
     }
 }

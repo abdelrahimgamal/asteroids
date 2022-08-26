@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/udacity/Asteroid-Radar-App---Starter/app/src/main/res/layout/fragment_detail.xml" value="0.18802083333333333" />
         <entry key="..\:/udacity/Asteroid-Radar-App---Starter/app/src/main/res/layout/fragment_main.xml" value="0.17831813576494426" />
         <entry key="..\:/udacity/Asteroid-Radar-App---Starter/app/src/main/res/layout/item_asteroid.xml" value="0.358695652173913" />
+        <entry key="..\:/udacity/Asteroid-Radar-App---Starter/app/src/main/res/menu/main_overflow_menu.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>
